@@ -1,0 +1,16 @@
+venv/
+uploads/
+app/static/a2_5sec.wav
+*.pyc
+__pycache__/
+instance/
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.idea/
+*.swp
+*~
