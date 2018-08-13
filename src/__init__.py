@@ -17,4 +17,8 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    # import and register blueprints
+    from . import chromagram
+    app.register_blueprint(chromagram.bp)
+
     return app

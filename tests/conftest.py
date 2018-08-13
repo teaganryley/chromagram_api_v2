@@ -13,6 +13,7 @@ def app():
     """Create and configure a new app instance for each test."""
     app = create_app({
         'TESTING': True,
+        'TEST_WAV': '/home/teagan/anaconda3/envs/simpletest/project/tests/resources/a2_5sec.wav'
     })
 
     yield app
