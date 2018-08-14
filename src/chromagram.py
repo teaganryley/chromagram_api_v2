@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-#from .helpers.file_uploader import FileUploader
-#from .helpers.local_upload import LocalUpload
+from .helpers.file_uploader import FileUploader
+from .helpers.local_upload import LocalUpload
 
 # create blueprint
 bp = Blueprint('chromagram', __name__)
