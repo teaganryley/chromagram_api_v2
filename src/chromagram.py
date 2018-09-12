@@ -20,7 +20,7 @@ def chromagram():
         if not file.filename or file.filename == '':
             return 'No file name'
         else:
-            return
+            return 'no'
         #uploader = FileUploader(file, LocalUpload)
         #return uploader.save()
 

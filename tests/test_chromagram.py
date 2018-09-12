@@ -8,7 +8,7 @@ def test_request_methods_post_valid(app):
     path_to_file = app.config['TEST_WAV']
     client = app.test_client()
     data = {}
-
+    # TODO: see if you can move this to a fixture
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, f.name)
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 200
