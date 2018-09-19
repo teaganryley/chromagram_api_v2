@@ -28,3 +28,14 @@ def test_request_methods_post_no_file_name(app):
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, '')
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 400
+
+
+def test_request_methods_post_file_too_large(app):
+    """Tests that Flask rejects files over a certain limit."""
+    path_to_file = app.config['TEST_WAV_LG']
+    client = app.test_client()
+    data = {}
+
+    with open(path_to_file, 'rb') as f:
+        data['file'] = (f, '')
+        assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 413

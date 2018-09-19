@@ -12,10 +12,11 @@ class LocalUpload:
         if self.is_allowed():
             filename = secure_filename(self.file.filename)
             self.file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return 'File saved via local upload'
+            return 'File saved via local upload.'
         else:
-            return 'File type not allowed'
+            return 'File type not allowed.'
 
     def is_allowed(self):
-        #TODO: add actual validation
-        return True
+        return '.' in self.file.filename and \
+               self.file.filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
