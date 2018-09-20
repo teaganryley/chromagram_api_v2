@@ -1,6 +1,5 @@
 import os
 import sys
-#import subprocess
 
 # ensures pytest will locate project without having to run setup.py
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -22,7 +21,7 @@ def app():
     })
 
     yield app
-    #subprocess.call(['./tests/teardown.sh'])
+
 
 @pytest.fixture
 def client(app):

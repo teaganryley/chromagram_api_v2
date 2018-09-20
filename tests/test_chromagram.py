@@ -13,7 +13,7 @@ def test_request_methods_post_valid(app):
     path_to_file = app.config['TEST_WAV']
     client = app.test_client()
     data = {}
-    # TODO: see if you can move this to a fixture
+
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, f.name)
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 200
@@ -44,8 +44,6 @@ def test_request_methods_post_file_too_large(app):
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, '')
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 413
-
-#TODO refactor tests to test for jsonify and custom error messages
 
 
 def test_is_allowed_valid_extension(app):
