@@ -9,7 +9,8 @@ class LocalUpload:
 
     def save(self):
         filename = secure_filename(self.file.filename)
-        self.file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'File saved via local upload.'
+        upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        self.file.save(upload_path)
+        return upload_path
 
 

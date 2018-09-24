@@ -1,4 +1,3 @@
-from src.helpers.local_upload import LocalUpload
 from werkzeug.datastructures import FileStorage
 from src.chromagram import is_allowed
 
@@ -9,7 +8,7 @@ def test_request_methods_get(client):
 
 
 def test_request_methods_post_valid(app):
-    """Test server response to POST request with no attached file name."""
+    """Test server response to POST request with valid file."""
     path_to_file = app.config['TEST_WAV']
     client = app.test_client()
     data = {}
@@ -17,6 +16,17 @@ def test_request_methods_post_valid(app):
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, f.name)
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 200
+
+
+def test_request_methods_post_valid_jsonify(app):
+    """Test server's json response to POST request with valid name."""
+    path_to_file = app.config['TEST_WAV']
+    client = app.test_client()
+    data = {}
+
+    with open(path_to_file, 'rb') as f:
+        data['file'] = (f, f.name)
+        assert client.post('/chromagram', content_type='multipart/form-data', data=data).get_data()
 
 
 def test_request_methods_post_no_file(client):
@@ -47,15 +57,16 @@ def test_request_methods_post_file_too_large(app):
 
 
 def test_is_allowed_valid_extension(app):
-    dummy_file = FileStorage(filename='a2_5sec.wav',
-                             content_type='audio/x-wav')
+    """Test is_allowed method properly accepts .wav files."""
+    dummy_file = FileStorage(filename='a2_5sec.wav', content_type='audio/x-wav')
     with app.app_context():
         assert is_allowed(dummy_file)
 
 
 def test_is_allowed_invalid_extension(app):
-    dummy_file = FileStorage(filename='a2_5sec.midi',
-                             content_type='audio/midi')
+    """Test is_allowed properly rejects files not specified in ALLOWED_EXTENSIONS."""
+    dummy_file = FileStorage(filename='a2_5sec.midi', content_type='audio/midi')
     with app.app_context():
         assert not is_allowed(dummy_file)
+
 
