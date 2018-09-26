@@ -28,3 +28,9 @@ def chromagram():
 def is_allowed(file):
     return '.' in file.filename and \
         file.filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+
+# current_audio = new AudioModel(req.files['file'])
+# # if current_audio.is_valid()
+# #      return generate_chromagram(current_audio.get_path())
+# # endif

@@ -5,12 +5,13 @@ from flask import current_app as app
 
 class LocalUpload:
     def __init__(self, file):
-        self.file = file
+        self.filename = secure_filename(file.filename)
+
+    def get_upload_path(self):
+        return os.path.join(app.config['UPLOAD_FOLDER'], self.filename)
 
     def save(self):
-        filename = secure_filename(self.file.filename)
-        upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        self.file.save(upload_path)
-        return upload_path
+        self.filename.save(self.get_upload_path())
 
 
+#TODO: refactor local upload tests
