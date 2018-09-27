@@ -5,7 +5,10 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
+from werkzeug.datastructures import FileStorage
 from src import create_app
+from src.helpers.audio_model import AudioModel
+from src.helpers.file_uploader import FileUploader
 
 
 @pytest.fixture
@@ -27,3 +30,12 @@ def app():
 def client(app):
     """A test client for the app."""
     return app.test_client()
+
+
+@pytest.fixture
+def test_model(app):
+    with app.app_context():
+        dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
+        test_model = AudioModel(file=dummy_file,
+                                module=FileUploader)
+        return test_model

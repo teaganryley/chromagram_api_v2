@@ -17,12 +17,12 @@ class AudioModel:
         self.upload_module.get_upload_path()
 
     def get_file_size(self):
-        # blob = request.files['file'].read()
-        # size = len(blob)
+        return len(self.file.read())
 
     def is_valid(self):
         ext_allowed = self.file.filename.lower().endswith(self.allowed_extensions)
-        size_allowed =
+        size_allowed = (self.get_file_size() <= self.max_upload_size)
+        return ext_allowed and size_allowed
 
 
 #get vendor

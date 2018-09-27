@@ -28,3 +28,5 @@ def test_local_upload_file_saving(app):
 
     # invoke bash script to delete test upload
     subprocess.call(['./tests/teardown.sh'])
+
+#TODO: refactor
