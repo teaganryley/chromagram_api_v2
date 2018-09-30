@@ -11,13 +11,20 @@ class AudioModel:
     #TODO: validation for upload module?
 
     def save_file(self):
-        self.upload_module.save()
+        if self.is_valid():
+            self.upload_module.save()
+            return True
+        else:
+            return False
 
     def get_path(self):
         self.upload_module.get_upload_path()
 
     def get_file_size(self):
         return len(self.file.read())
+
+    def get_secure_file_name(self):
+        return self.upload_module.filename
 
     def is_valid(self):
         ext_allowed = self.file.filename.lower().endswith(self.allowed_extensions)
@@ -28,3 +35,5 @@ class AudioModel:
 #get vendor
 
 #delete file
+
+#get file name method?

@@ -8,7 +8,7 @@ import pytest
 from werkzeug.datastructures import FileStorage
 from src import create_app
 from src.helpers.audio_model import AudioModel
-from src.helpers.file_uploader import FileUploader
+from src.helpers.local_upload import LocalUpload
 
 
 @pytest.fixture
@@ -37,5 +37,12 @@ def test_model(app):
     with app.app_context():
         dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
         test_model = AudioModel(file=dummy_file,
-                                module=FileUploader)
-        return test_model
+                                module=LocalUpload)
+        return test_model, app
+
+
+@pytest.fixture
+def test_uploader(app):
+    with app.app_context():
+        dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
+        return LocalUpload(dummy_file), dummy_file, app
