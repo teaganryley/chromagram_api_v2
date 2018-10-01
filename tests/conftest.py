@@ -33,15 +33,6 @@ def client(app):
 
 
 @pytest.fixture
-def test_model(app):
-    with app.app_context():
-        dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
-        test_model = AudioModel(file=dummy_file,
-                                module=LocalUpload)
-        return test_model, app
-
-
-@pytest.fixture
 def test_uploader(app):
     with app.app_context():
         dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')

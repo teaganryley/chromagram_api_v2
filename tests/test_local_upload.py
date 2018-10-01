@@ -1,35 +1,5 @@
 import subprocess, os, pytest
-from src.helpers.local_upload import LocalUpload
-from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
-
-
-def test_local_upload_return_value(app):
-    # """Checks save() method returns True."""
-    # with app.app_context():
-    #     dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
-    #     my_local_upload = LocalUpload(dummy_file)
-    #     assert my_local_upload.save()
-    #
-    # # invoke bash script to delete test upload
-    # subprocess.call(['./tests/teardown.sh'])
-    pass
-
-
-def test_local_upload_file_saving(app):
-    """Checks save() method actually saves file to upload folder."""
-    # with app.app_context():
-    #     dummy_file = FileStorage(filename=app.config['TEST_WAV'], content_type='audio/x-wav')
-    #     my_local_upload = LocalUpload(dummy_file)
-    #     my_local_upload.save()
-    #
-    #     # verify that file has been saved to upload directory
-    #     dummy_name = secure_filename(dummy_file.filename)
-    #     assert dummy_name in os.listdir(app.config['UPLOAD_FOLDER'])
-    #
-    # # invoke bash script to delete test upload
-    # subprocess.call(['./tests/teardown.sh'])
-    pass
 
 
 def test_local_upload_init(test_uploader):
@@ -50,12 +20,26 @@ def test_local_upload_get_upload_path(test_uploader):
 
 
 def test_local_upload_save_none(test_uploader):
-    """Verify AttributeError is raise when saving None."""
+    """Verify exception is raise when saving None."""
     my_local_upload, dummy_file, app = test_uploader
     my_local_upload.filename = None
 
     with app.app_context():
-        with pytest.raises(AttributeError):
+        with pytest.raises(TypeError):
             my_local_upload.save()
 
-#TODO: test saving valid file. is there a return value for saving a file?
+
+def test_local_upload_save_valid(test_uploader):
+    """Verify presence of saved file locally."""
+    my_local_upload, dummy_file, app = test_uploader
+
+    with app.app_context():
+        # save file locally-- no return type, so nothing to check
+        my_local_upload.save()
+
+        # verify that file has been saved to upload directory
+        dummy_name = secure_filename(dummy_file.filename)
+        assert dummy_name in os.listdir(app.config['UPLOAD_FOLDER'])
+
+        # invoke bash script to delete test upload
+        subprocess.call(['./tests/teardown.sh'])
