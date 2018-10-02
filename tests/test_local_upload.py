@@ -11,7 +11,7 @@ def test_local_upload_init(test_uploader):
         assert my_local_upload.filename == secure_filename(dummy_file.filename)
 
 
-def test_local_upload_get_upload_path(test_uploader):
+def test_get_upload_path(test_uploader):
     """Tests LocalUpload upload path is not None."""
     my_local_upload, dummy_file, app = test_uploader
 
@@ -19,7 +19,7 @@ def test_local_upload_get_upload_path(test_uploader):
         assert my_local_upload.get_upload_path()
 
 
-def test_local_upload_save_none(test_uploader):
+def test_save_none(test_uploader):
     """Verify exception is raise when saving None."""
     my_local_upload, dummy_file, app = test_uploader
     my_local_upload.filename = None
@@ -29,7 +29,7 @@ def test_local_upload_save_none(test_uploader):
             my_local_upload.save()
 
 
-def test_local_upload_save_valid(test_uploader):
+def test_save_valid(test_uploader):
     """Verify presence of saved file locally."""
     my_local_upload, dummy_file, app = test_uploader
 

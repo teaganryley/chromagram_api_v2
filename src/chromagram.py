@@ -18,9 +18,10 @@ def chromagram():
         if file.filename == '':
             return 'No selected file.', 400
 
-        if file and is_allowed(file):
-            uploader = FileUploader(file, LocalUpload)
-            return jsonify(chromagram=build_chroma.analyze(uploader.save()))
+        print(type(file))
+        #if file and is_allowed(file):
+            #uploader = FileUploader(file, LocalUpload)
+            #return jsonify(chromagram=build_chroma.analyze(uploader.save()))
 
     return 'This appears if the request method is not POST.'
 

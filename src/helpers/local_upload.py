@@ -13,3 +13,4 @@ class LocalUpload:
 
     def save(self):
         self.file.save(self.get_upload_path())
+
