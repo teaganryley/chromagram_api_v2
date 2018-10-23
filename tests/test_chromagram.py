@@ -1,6 +1,3 @@
-from werkzeug.datastructures import FileStorage
-from src.chromagram import is_allowed
-
 
 def test_request_methods_get(client):
     """Test server response to GET."""
@@ -54,19 +51,4 @@ def test_request_methods_post_file_too_large(app):
     with open(path_to_file, 'rb') as f:
         data['file'] = (f, '')
         assert client.post('/chromagram', content_type='multipart/form-data', data=data).status_code == 413
-
-
-def test_is_allowed_valid_extension(app):
-    """Test is_allowed method properly accepts .wav files."""
-    dummy_file = FileStorage(filename='a2_5sec.wav', content_type='audio/x-wav')
-    with app.app_context():
-        assert is_allowed(dummy_file)
-
-
-def test_is_allowed_invalid_extension(app):
-    """Test is_allowed properly rejects files not specified in ALLOWED_EXTENSIONS."""
-    dummy_file = FileStorage(filename='a2_5sec.midi', content_type='audio/midi')
-    with app.app_context():
-        assert not is_allowed(dummy_file)
-
 
